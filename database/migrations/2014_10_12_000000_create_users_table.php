@@ -27,7 +27,9 @@ class CreateUsersTable extends Migration
             'name' => 'Admin',
             'email' => 'admin@email.com',
             'password' => bcrypt('teste'),
-            'access' => 'Admin'
+            'access' => 'Admin',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now(),
         ]);
     }
 
