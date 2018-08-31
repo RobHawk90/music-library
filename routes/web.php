@@ -11,17 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home')->middleware('auth');
-
-Route::get('/permission', 'LoginController@permission');
-
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login', 'LoginController@login');
 Route::get('/logout', 'LoginController@logout');
 
-Route::get('/artists', 'ArtistController@index');
+Route::get('/{vue_router?}', function () {
+    return view('welcome');
+})
+    ->where('vue_router', '[\/\w\.-]*')
+    ->middleware('auth')
+    ->name('home');
+
+Route::get('/permission', 'LoginController@permission');
+
+/*Route::get('/artists', 'ArtistController@index');*/
 Route::get('/artists/create', 'ArtistController@create')->middleware('access.user');
 Route::get('/artists/{id}', 'ArtistController@show');
 Route::get('/artists/edit/{artist}', 'ArtistController@edit')->middleware('access.user');

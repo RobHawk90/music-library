@@ -1,23 +1,37 @@
+import './bootstrap';
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import Vue from 'vue';
+import Vuetify from 'vuetify';
+import VueI18n from 'vue-i18n';
+import VueRouter from 'vue-router';
 
-require('./bootstrap');
-require('datatables');
+import messages from './vue-i18n-locales.generated';
+import routes from './routes';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 
-window.Vue = require('vue');
+Vue.use(Vuetify);
+Vue.use(VueI18n);
+Vue.use(VueRouter);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+const i18n = new VueI18n({ locale: 'en', fallbackLocale: 'en', messages });
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+routes.beforeEnter = (to, from, next) => {
+    const lang = to.params.lang;
+    if(!['en', 'pt'].includes(lang)) return next('en');
+    window.localStorage.setItem('lang', lang);
+    if(i18n.locale !== lang) i18n.locale = lang;
+    next();
+};
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: [routes],
+});
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    router,
+    i18n,
+    components: { Login, Dashboard },
 });
