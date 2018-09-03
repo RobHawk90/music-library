@@ -2,7 +2,8 @@ import ArtistList from './components/artists/ArtistList';
 import ArtistForm from './components/artists/ArtistForm';
 import AlbumList from './components/albums/AlbumList';
 import AlbumForm from './components/albums/AlbumForm';
-import Login from './components/Login';
+import UserList from './components/users/UserList';
+import UserForm from './components/users/UserForm';
 
 export default {
     path: '/:lang',
@@ -38,6 +39,20 @@ export default {
         icon: 'create_new_folder',
         title: 'New Album',
         name: 'new_album',
+    },
+    {
+        path: 'list/users',
+        component: UserList,
+        icon: 'person',
+        title: 'Users',
+        name: 'users',
+    },
+    {
+        path: 'create/users',
+        component: UserForm,
+        icon: 'person_add',
+        title: 'New User',
+        name: 'new_user',
     },
 
     ],

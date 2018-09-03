@@ -20,6 +20,14 @@
       </v-btn>
       <v-toolbar-title>Music Library</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-menu>
+        <v-btn slot="activator">{{ $t('Language') }}</v-btn>
+        <v-list>
+          <v-list-tile v-for="l in languages" :key="l" @click="changeLanguage(l)">
+            <v-list-title>{{ l }}</v-list-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
       <form action="/logout" method="GET">
         <v-btn type="submit">Logout</v-btn>
       </form>
@@ -51,12 +59,20 @@
     data () {
       return {
         routes: routes.children,
+        languages: ['en', 'pt-BR'],
         lang: window.localStorage.getItem('lang'),
         drawer: true,
         fixed: false,
         miniVariant: false,
-      }
-    }
+      };
+    },
+    methods: {
+      changeLanguage(lang) {
+        let currentRoute = this.$router.currentRoute;
+        this.$router.push({name: currentRoute.name, params: {lang}});
+        this.$router.go();
+      },
+    },
   }
 </script>
 

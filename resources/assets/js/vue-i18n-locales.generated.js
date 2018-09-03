@@ -4,9 +4,6 @@ export default {
             "failed": "These credentials do not match our records.",
             "throttle": "Too many login attempts. Please try again in {seconds} seconds."
         },
-        "messages": {
-            "new_artist": "New Artist"
-        },
         "pagination": {
             "previous": "&laquo; Previous",
             "next": "Next &raquo;"
@@ -126,17 +123,25 @@ export default {
             "attributes": []
         }
     },
-    "pt": {
+    "pt-BR": {
+        "Access Level": "Nível de Acesso",
         "Albums": "Álbuns",
         "Artists": "Artistas",
+        "Language": "Linguagem",
+        "Name": "Nome",
         "New Album": "Novo Álbum",
         "New Artist": "Novo Artista",
+        "New User": "Novo Usuário",
+        "Password": "Senha",
+        "Password Confirmation": "Confirmar Senha",
+        "Public": "Público",
+        "User": "Usuário",
+        "Admin": "Administrador",
+        "Save": "Salvar",
+        "Users": "Usuários",
         "auth": {
             "failed": "Essas credenciais não correspondem aos nossos registros.",
             "throttle": "Muitas tentativas de login. Tente novamente em {seconds} segundos."
-        },
-        "messages": {
-            "new_artist": "New Artist"
         },
         "pagination": {
             "previous": "&laquo; Anterior",

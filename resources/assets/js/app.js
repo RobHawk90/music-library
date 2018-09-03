@@ -18,7 +18,7 @@ const i18n = new VueI18n({ locale: 'en', fallbackLocale: 'en', messages });
 
 routes.beforeEnter = (to, from, next) => {
     const lang = to.params.lang;
-    if(!['en', 'pt'].includes(lang)) return next('en');
+    if(!['en', 'pt-BR'].includes(lang)) return next('en');
     window.localStorage.setItem('lang', lang);
     if(i18n.locale !== lang) i18n.locale = lang;
     next();

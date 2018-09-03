@@ -15,6 +15,10 @@ Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login', 'LoginController@login');
 Route::get('/logout', 'LoginController@logout');
 
+Route::prefix('api')->group(function () {
+    Route::resource('users', 'Api\\UserController');
+});
+
 Route::get('/{vue_router?}', function () {
     return view('welcome');
 })
