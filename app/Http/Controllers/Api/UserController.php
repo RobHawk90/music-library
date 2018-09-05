@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Requests\UserEditRequest;
 use App\Http\Requests\UserRequest;
 use App\User;
 
@@ -14,29 +15,49 @@ class UserController extends AuthController
         return $users;
     }
 
-    public function edit(User $user)
+    public function show(User $user)
     {
         return $user;
     }
 
     public function store(UserRequest $req)
     {
-        $req->password = bcrypt($req->password);
-        $user = User::create($req->validated());
-        return $user;
+        $user = $req->validated();
+        $user->password = bcrypt($user->password);
+        $user = User::create($user);
+        return $this->buildResponse($user);
     }
 
-    public function update(UserRequest $req, User $user)
+    public function update(UserEditRequest $req, User $user)
     {
+        if (isset($req->password)) {
+            $this->validate(request(), ['password' => 'required|confirmed|min:5|max:191']);
+            $user->password = bcrypt($req->password);
+        }
+
+        if ($user->needChangeEmail()) {
+            $this->validate(request(), ['email' => 'required|email|unique:users|max:191']);
+        }
+
         $user->name = $req->name;
-        $user->password = bcrypt($req->password);
         $user->access = $req->access;
+        $user->email = $req->email;
         $user->save();
-        return $user;
+
+        return $this->buildResponse($user);
     }
 
     public function destroy(User $user)
     {
         $user->delete();
+        return ['msg' => sprintf(__("The user '%s' was removed"), $user->name)];
+    }
+
+    private function buildResponse($user)
+    {
+        return [
+            'msg' => sprintf(__("The user '%s' was saved"), $user->name),
+            'data' => $user,
+        ];
     }
 }

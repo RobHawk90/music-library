@@ -1,3 +1,4 @@
+import Home from './components/Home';
 import ArtistList from './components/artists/ArtistList';
 import ArtistForm from './components/artists/ArtistForm';
 import AlbumList from './components/albums/AlbumList';
@@ -6,12 +7,17 @@ import UserList from './components/users/UserList';
 import UserForm from './components/users/UserForm';
 
 export default {
-    path: '/:lang',
+    path: '/:locale',
     component: { template: '<router-view></router-view>' },
-    icon: 'home',
-    title: 'Home',
     children: [
 
+    {
+        path: 'home',
+        component: Home,
+        icon: 'home',
+        title: 'Home',
+        name: 'home',
+    },
     {
         path: 'list/artists',
         component: ArtistList,
@@ -53,6 +59,11 @@ export default {
         icon: 'person_add',
         title: 'New User',
         name: 'new_user',
+    },
+    {
+        path: 'edit/users/:id',
+        component: UserForm,
+        name: 'edit_user',
     },
 
     ],

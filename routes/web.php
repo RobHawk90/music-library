@@ -15,16 +15,22 @@ Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login', 'LoginController@login');
 Route::get('/logout', 'LoginController@logout');
 
-Route::prefix('api')->group(function () {
-    Route::resource('users', 'Api\\UserController');
-});
+foreach (['en', 'pt-BR'] as $locale) {
+    Route::prefix("api/$locale")->group(function () {
+        Route::resources([
+            'artists' => 'Api\\ArtistController',
+            'users' => 'Api\\UserController',
+        ]);
+    });
+}
 
 Route::get('/{vue_router?}', function () {
     return view('welcome');
 })
-    ->where('vue_router', '[\/\w\.-]*')
-    ->middleware('auth')
-    ->name('home');
+->where('vue_router', '[\/\w\.-]*')
+->middleware('auth')
+->name('home');
+
 
 Route::get('/permission', 'LoginController@permission');
 

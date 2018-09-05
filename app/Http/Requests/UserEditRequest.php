@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UserRequest extends FormRequest
+class UserEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,9 +36,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|max:191',
-            'password' => 'required|confirmed|min:5|max:191',
             'access' => ['required', Rule::in(['Public', 'User', 'Admin'])],
-            'email' = 'required|email|unique:users|max:191',
         ];
     }
 }

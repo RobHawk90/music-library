@@ -27,7 +27,7 @@ class LoginController extends Controller
     {
         auth()->logout();
 
-        return redirect()->home();
+        return redirect()->route('login');
     }
 
     public function permission()

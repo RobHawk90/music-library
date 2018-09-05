@@ -10,7 +10,7 @@
                   <h1 class="flex my-4">Music Library</h1>
                 </div>
                 <v-text-field append-icon="person" name="email" label="Email" type="text" v-model="email"></v-text-field>
-                <v-text-field append-icon="lock" name="password" label="Password" id="password" type="password" v-model="password"></v-text-field>
+                <v-text-field append-icon="lock" name="password" :label="$t('Password')" id="password" type="password" v-model="password"></v-text-field>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>

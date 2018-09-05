@@ -14,13 +14,19 @@ Vue.use(Vuetify);
 Vue.use(VueI18n);
 Vue.use(VueRouter);
 
-const i18n = new VueI18n({ locale: 'en', fallbackLocale: 'en', messages });
+const locale = window.localStorage.getItem('locale');
+const i18n = new VueI18n({ locale, fallbackLocale: 'en', messages });
 
 routes.beforeEnter = (to, from, next) => {
-    const lang = to.params.lang;
-    if(!['en', 'pt-BR'].includes(lang)) return next('en');
-    window.localStorage.setItem('lang', lang);
-    if(i18n.locale !== lang) i18n.locale = lang;
+    const lang = to.params.locale;
+
+    if(!['en', 'pt-BR'].includes(lang)) return next(locale);
+
+    if(i18n.locale !== lang) {
+        window.localStorage.setItem('locale', lang);
+        i18n.locale = lang;
+    }
+
     next();
 };
 

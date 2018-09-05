@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer dark persistent :mini-variant="miniVariant" :clipped="true" v-model="drawer" enable-resize-watcher app>
       <v-list>
-        <v-list-tile v-for="(route, index) in routes" :key="index" @click="" :to="{name: route.name, params: {lang}}">
+        <v-list-tile v-for="(route, index) in routes" :key="index" @click="" :to="{name: route.name, params: {locale}}">
           <v-list-tile-action>
             <v-icon>{{ route.icon }}</v-icon>
           </v-list-tile-action>
@@ -23,8 +23,8 @@
       <v-menu>
         <v-btn slot="activator">{{ $t('Language') }}</v-btn>
         <v-list>
-          <v-list-tile v-for="l in languages" :key="l" @click="changeLanguage(l)">
-            <v-list-title>{{ l }}</v-list-title>
+          <v-list-tile v-for="lang in languages" :key="lang" @click="changeLanguage(lang)">
+            {{ lang }}
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -58,18 +58,18 @@
   export default {
     data () {
       return {
-        routes: routes.children,
+        routes: routes.children.filter(route => route.title),
         languages: ['en', 'pt-BR'],
-        lang: window.localStorage.getItem('lang'),
+        locale: window.localStorage.getItem('locale'),
         drawer: true,
         fixed: false,
         miniVariant: false,
       };
     },
     methods: {
-      changeLanguage(lang) {
-        let currentRoute = this.$router.currentRoute;
-        this.$router.push({name: currentRoute.name, params: {lang}});
+      changeLanguage(locale) {
+        let currentRoute = this.$router.currentRoute.name || 'home';
+        this.$router.push({name: currentRoute, params: {locale}});
         this.$router.go();
       },
     },

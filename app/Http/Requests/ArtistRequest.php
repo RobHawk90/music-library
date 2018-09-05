@@ -16,6 +16,16 @@ class ArtistRequest extends FormRequest
         return true;
     }
 
+    public function attributes()
+    {
+        return [
+            'name' => __('Name'),
+            'genre' => __('Genre'),
+            'image' => __('Imagem'),
+            'description' => __('Description'),
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +35,7 @@ class ArtistRequest extends FormRequest
     {
         return [
             'name' => 'required|max:191',
-            'image' => 'required|max:191',
+            'image' => 'required|file',
             'genre' => 'required|max:191',
             'description' => 'required|string',
         ];
