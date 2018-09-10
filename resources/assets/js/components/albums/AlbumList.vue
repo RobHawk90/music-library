@@ -12,7 +12,7 @@
                                 <div class="body-2">{{ album.artist.name }}</div>
                             </div>
                         </v-card-title>
-                        <v-card-actions v-if="user.access">
+                        <v-card-actions v-if="$user.access">
                             <v-icon @click="edit(album)">edit</v-icon>
                             <confirm-button
                                 color="red"
@@ -37,7 +37,6 @@
         components: { ConfirmButton },
         created() {
             this.listAll();
-            this.resource.user().then(user => this.user = user);
         },
         data() {
             return {

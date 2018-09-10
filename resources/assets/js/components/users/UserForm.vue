@@ -42,7 +42,6 @@
 
             if(id)
                 this.resource.findById(id).then(user => {
-                    // user.access = { value: user.access, text: this.$t(user.access) };
                     this.user = user;
                     this.title = `${this.$t('Edit User')} "${user.name}"`;
                 });
@@ -63,8 +62,6 @@
         },
         methods: {
             save() {
-                // const user = {...this.user};
-                // user.access = user.access ? user.access['value'] : '';
                 this.resource.save(this.user).then(data => {
                     this.newUser();
                     this.showSnack(data.msg);

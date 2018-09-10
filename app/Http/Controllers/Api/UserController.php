@@ -28,7 +28,7 @@ class UserController extends Controller
         return $this->buildResponse($user);
     }
 
-    public function update(Request $req, User $user)
+    public function update(UserRequest $req, User $user)
     {
         if (isset($req->password)) {
             $this->validate(request(), ['password' => 'required|confirmed|min:5|max:191']);

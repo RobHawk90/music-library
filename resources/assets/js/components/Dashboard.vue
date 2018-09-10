@@ -4,10 +4,10 @@
       <v-list>
         <v-list-tile v-for="(route, index) in routes" :key="index" @click="" :to="{name: route.name, params: {locale}}">
           <v-list-tile-action>
-            <v-icon>{{ route.icon }}</v-icon>
+            <v-icon>{{ route.meta.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ $t(route.title) }}</v-list-tile-title>
+            <v-list-tile-title>{{ $t(route.meta.title) }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -68,7 +68,6 @@
         drawer: true,
         fixed: false,
         miniVariant: false,
-        showSearch: false,
         searchText: '',
         searchData: {},
       };
@@ -87,8 +86,9 @@
         axios.get('/user').then(res => {
             const user = res.data;
             const visibleRoutes = routes.children.filter(route => {
-                const hasAccess = user.access === 'Admin' || route.access === user.access || !route.access;
-                return route.title && hasAccess;
+                const meta = route.meta;
+                const hasAccess = user.access === 'Admin' || meta.access === user.access || !meta.access;
+                return meta.title && hasAccess;
             });
             this.routes = visibleRoutes;
         });

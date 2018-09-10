@@ -34,11 +34,16 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|max:191',
-            'password' => 'required|confirmed|min:5|max:191',
-            'email' => 'required|email|unique:users|max:191',
             'access' => ['required', Rule::in(['Public', 'User', 'Admin'])],
         ];
+
+        if (request()->isMethod('post')) {
+            $rules['password'] = 'required|confirmed|min:5|max:191';
+            $rules['email'] = 'required|email|unique:users|max:191';
+        }
+
+        return $rules;
     }
 }

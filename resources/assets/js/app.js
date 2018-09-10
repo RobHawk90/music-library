@@ -39,9 +39,22 @@ const router = new VueRouter({
     routes: [routes],
 });
 
-const app = new Vue({
-    el: '#app',
-    router,
-    i18n,
-    components: { Login, Dashboard },
+router.beforeEach((to, from, next) => {
+    const user = Vue.prototype.$user;
+    const routeAccess = to.meta.access;
+
+    if(!routeAccess || user.access === 'Admin' || user.access === routeAccess)
+        return next();
+
+    next({ name: 'home' });
+});
+
+axios.get('/user').then(res => {
+    Vue.prototype.$user = res.data;
+    new Vue({
+        el: '#app',
+        router,
+        i18n,
+        components: { Login, Dashboard },
+    });
 });
