@@ -31,6 +31,13 @@ export default {
         icon: 'person_add',
         title: 'New Artist',
         name: 'new_artist',
+        access: 'User',
+    },
+    {
+        path: 'edit/artists/:id',
+        component: ArtistForm,
+        name: 'edit_artist',
+        access: 'User',
     },
     {
         path: 'list/albums',
@@ -40,11 +47,18 @@ export default {
         name: 'albums',
     },
     {
+        path: 'edit/albums/:id',
+        component: AlbumForm,
+        name: 'edit_album',
+        access: 'User',
+    },
+    {
         path: 'create/albums',
         component: AlbumForm,
         icon: 'create_new_folder',
         title: 'New Album',
         name: 'new_album',
+        access: 'User',
     },
     {
         path: 'list/users',
@@ -52,6 +66,7 @@ export default {
         icon: 'person',
         title: 'Users',
         name: 'users',
+        access: 'Admin',
     },
     {
         path: 'create/users',
@@ -59,11 +74,13 @@ export default {
         icon: 'person_add',
         title: 'New User',
         name: 'new_user',
+        access: 'Admin',
     },
     {
         path: 'edit/users/:id',
         component: UserForm,
         name: 'edit_user',
+        access: 'Admin',
     },
 
     ],

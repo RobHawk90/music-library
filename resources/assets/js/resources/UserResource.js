@@ -7,9 +7,9 @@ export default class UserResource extends Resource {
 
     save(user) {
         if(user.id)
-            return this.put(`users/${user.id}`, user);
+            return this.put(`users/${user.id}`, user).then(res => res.data);
         else
-            return this.post('users', user);
+            return this.post('users', user).then(res => res.data);
     }
 
     findById(id) {

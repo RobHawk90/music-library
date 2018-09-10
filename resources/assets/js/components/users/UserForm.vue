@@ -21,11 +21,11 @@
                 v-model="user.password_confirmation"
                 :label="$t('Password Confirmation')"
                 :error-messages="errors.password"></v-text-field>
-            <v-combobox
+            <v-select
                 v-model="user.access"
                 :items="accessLevels"
                 :label="$t('Access Level')"
-                :error-messages="errors.access"></v-combobox>
+                :error-messages="errors.access"></v-select>
             <v-btn type="submit">{{ $t('Save') }}</v-btn>
             <v-btn @click="newUser()">{{ $t('New') }}</v-btn>
         </v-form>
@@ -42,7 +42,7 @@
 
             if(id)
                 this.resource.findById(id).then(user => {
-                    user.access = { value: user.access, text: this.$t(user.access) };
+                    // user.access = { value: user.access, text: this.$t(user.access) };
                     this.user = user;
                     this.title = `${this.$t('Edit User')} "${user.name}"`;
                 });
@@ -63,9 +63,9 @@
         },
         methods: {
             save() {
-                const user = {...this.user};
-                user.access = user.access ? user.access['value'] : '';
-                this.resource.save(user).then(({data}) => {
+                // const user = {...this.user};
+                // user.access = user.access ? user.access['value'] : '';
+                this.resource.save(this.user).then(data => {
                     this.newUser();
                     this.showSnack(data.msg);
                 }).catch(({response}) => {

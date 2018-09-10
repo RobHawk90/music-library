@@ -13,7 +13,18 @@ class MusicRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => __('Name'),
+            'order' => __('Order'),
+            'duration' => __('Duration'),
+            'composer' => __('Composer'),
+            'album_id' => __('Album'),
+        ];
     }
 
     /**
@@ -28,7 +39,7 @@ class MusicRequest extends FormRequest
             'order' => 'required|integer',
             'duration' => 'required',
             'composer' => 'required|max:191',
-            'album_id' => 'exists:albums,id',
+            'album_id' => 'required|exists:albums,id',
         ];
     }
 }

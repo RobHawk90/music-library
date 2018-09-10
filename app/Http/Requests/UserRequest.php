@@ -14,7 +14,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->access === 'Admin';
     }
 
     public function attributes()
@@ -22,8 +22,8 @@ class UserRequest extends FormRequest
         return [
             'name' => __('Name'),
             'password' => __('Password'),
-            'access' => __('Access Level'),
             'email' => __('Email'),
+            'access' => __('Access Level'),
         ];
     }
 
@@ -37,8 +37,8 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|max:191',
             'password' => 'required|confirmed|min:5|max:191',
+            'email' => 'required|email|unique:users|max:191',
             'access' => ['required', Rule::in(['Public', 'User', 'Admin'])],
-            'email' = 'required|email|unique:users|max:191',
         ];
     }
 }

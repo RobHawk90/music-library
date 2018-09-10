@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\AuthController;
-use App\Http\Requests\UserEditRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\User;
+use Illuminate\Http\Request;
 
-class UserController extends AuthController
+class UserController extends Controller
 {
     public function index()
     {
@@ -23,12 +23,12 @@ class UserController extends AuthController
     public function store(UserRequest $req)
     {
         $user = $req->validated();
-        $user->password = bcrypt($user->password);
+        $user['password'] = bcrypt($user['password']);
         $user = User::create($user);
         return $this->buildResponse($user);
     }
 
-    public function update(UserEditRequest $req, User $user)
+    public function update(Request $req, User $user)
     {
         if (isset($req->password)) {
             $this->validate(request(), ['password' => 'required|confirmed|min:5|max:191']);

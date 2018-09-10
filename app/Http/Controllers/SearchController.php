@@ -7,7 +7,7 @@ use App\Artist;
 use App\Music;
 use Illuminate\Http\Request;
 
-class SearchController extends AuthController
+class SearchController extends Controller
 {
     public function search()
     {
@@ -18,6 +18,11 @@ class SearchController extends AuthController
         $albums = Album::where('name', 'like', "%$search%")->get();
         $songs = Music::where('name', 'like', "%$search%")->get();
 
-        return view('search', compact(['search', 'artists', 'albums', 'songs']));
+        return [
+            'search' => $search,
+            'artists' => $artists,
+            'albums' => $albums,
+            'songs' => $songs,
+        ];
     }
 }

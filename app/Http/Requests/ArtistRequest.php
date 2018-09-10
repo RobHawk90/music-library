@@ -13,7 +13,7 @@ class ArtistRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     public function attributes()
@@ -33,11 +33,16 @@ class ArtistRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|max:191',
-            'image' => 'required|file',
             'genre' => 'required|max:191',
             'description' => 'required|string',
         ];
+
+        if (request()->isMethod('post')) {
+            $rules['image'] = 'required|file';
+        }
+
+        return $rules;
     }
 }

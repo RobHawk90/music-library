@@ -19,4 +19,8 @@ export default class Resource {
     delete(url) {
         return axios.delete(this.baseUrl + url);
     }
+
+    user() {
+        return axios.get('/user').then(res => res.data);
+    }
 }

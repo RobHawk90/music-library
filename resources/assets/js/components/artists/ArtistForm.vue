@@ -21,8 +21,9 @@
                     v-model="artist.image"
                     :error-messages="errors.image"></file-input>
                 <v-btn type="submit">{{ $t('Save') }}</v-btn>
-                <v-btn @click="newUser()">{{ $t('New') }}</v-btn>
+                <v-btn @click="newArtist()">{{ $t('New') }}</v-btn>
             </v-form>
+            <v-snackbar v-model="snackbar" :timeout="3000" color="success">{{ message }}</v-snackbar>
         </v-layout>
     </div>
 </template>
@@ -36,6 +37,13 @@
             FileInput,
         },
         created() {
+            const id = this.$route.params.id;
+            if(id)
+                this.resource.findById(id).then(artist => {
+                    this.title = this.$t('Edit Artist') + ` "${artist.name}"`;
+                    this.imageSrc = '/' + artist.image;
+                    this.artist = artist;
+                });
         },
         data() {
             return {
@@ -44,6 +52,8 @@
                 errors: {},
                 imageSrc: `https://fakeimg.pl/350x200/?text=${this.$t('Select a file')}`,
                 resource: new ArtistResource(),
+                snackbar: false,
+                message: '',
             };
         },
         methods: {
@@ -52,14 +62,22 @@
                 this.artist.image = image.file;
             },
             save() {
-                const artist = this.artist;
-                this.resource.save(artist).then(data => {
-                    console.log(data);
+                this.resource.save(this.artist).then(data => {
+                    this.message = data.msg;
+                    this.snackbar = true;
+                    this.newArtist();
                 }).catch(({response}) => {
                     if(response.status === 422)
                         this.errors = response.data.errors;
                 });
             },
+            newArtist() {
+                this.$router.push({name: 'new_artist'});
+                this.artist = {};
+                this.errors = {};
+                this.imageSrc = `https://fakeimg.pl/350x200/?text=${this.$t('Select a file')}`;
+                this.title = this.$t('New Artist');
+            }
         },
     }
 </script>

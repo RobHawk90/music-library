@@ -14,7 +14,11 @@ Vue.use(Vuetify);
 Vue.use(VueI18n);
 Vue.use(VueRouter);
 
-const locale = window.localStorage.getItem('locale');
+let locale = window.localStorage.getItem('locale');
+if(!locale) {
+    window.localStorage.setItem('locale', 'en');
+    locale = 'en';
+}
 const i18n = new VueI18n({ locale, fallbackLocale: 'en', messages });
 
 routes.beforeEnter = (to, from, next) => {

@@ -20,8 +20,9 @@
       </v-btn>
       <v-toolbar-title>Music Library</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn icon :to="{name: 'home'}"><v-icon>search</v-icon></v-btn>
       <v-menu>
-        <v-btn slot="activator">{{ $t('Language') }}</v-btn>
+        <v-btn slot="activator" icon><v-icon>language</v-icon></v-btn>
         <v-list>
           <v-list-tile v-for="lang in languages" :key="lang" @click="changeLanguage(lang)">
             {{ lang }}
@@ -29,7 +30,7 @@
         </v-list>
       </v-menu>
       <form action="/logout" method="GET">
-        <v-btn type="submit">Logout</v-btn>
+        <v-btn type="submit" icon><v-icon>exit_to_app</v-icon></v-btn>
       </form>
     </v-toolbar>
 
@@ -56,14 +57,20 @@
   import routes from '../routes';
 
   export default {
+    created() {
+        this.checkUserAccess();
+    },
     data () {
       return {
-        routes: routes.children.filter(route => route.title),
+        routes: [],
         languages: ['en', 'pt-BR'],
         locale: window.localStorage.getItem('locale'),
         drawer: true,
         fixed: false,
         miniVariant: false,
+        showSearch: false,
+        searchText: '',
+        searchData: {},
       };
     },
     methods: {
@@ -71,6 +78,20 @@
         let currentRoute = this.$router.currentRoute.name || 'home';
         this.$router.push({name: currentRoute, params: {locale}});
         this.$router.go();
+      },
+      search() {
+        const search = this.searchText;
+        axios.post('/search', { search }).then(res => this.searchData = res.data);
+      },
+      checkUserAccess() {
+        axios.get('/user').then(res => {
+            const user = res.data;
+            const visibleRoutes = routes.children.filter(route => {
+                const hasAccess = user.access === 'Admin' || route.access === user.access || !route.access;
+                return route.title && hasAccess;
+            });
+            this.routes = visibleRoutes;
+        });
       },
     },
   }

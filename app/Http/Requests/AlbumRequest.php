@@ -13,7 +13,17 @@ class AlbumRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => __('Name'),
+            'year' => __('Year'),
+            'artist_id' => __('Artist'),
+            'image' => __('Image'),
+        ];
     }
 
     /**
@@ -23,11 +33,16 @@ class AlbumRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'artist_id' => 'exists:artists,id',
+        $rules = [
+            'artist_id' => 'required|exists:artists,id',
             'name' => 'required|max:191',
             'year' => 'required|integer',
-            'image' => 'required|max:191'
         ];
+
+        if (request()->isMethod('post')) {
+            $rules['image'] = 'required|file';
+        }
+
+        return $rules;
     }
 }
