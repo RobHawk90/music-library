@@ -1,28 +1,22 @@
-# v2 syntax
 version: '2'
 
-# Named volumes
 volumes:
-  # MySQL Data
-  musiclibrary-mysql-data:
+  musiclibrary-postgres-data:
     driver: local
 
 services:
-  # MySQL (5.7)
-  mysql:
-    image: ambientum/mysql:5.7
-    container_name: musiclibrary-mysql
+  postgres:
+    image: postgres:10.3
+    container_name: musiclibrary-postgres
     volumes:
-      - musiclibrary-mysql-data:/var/lib/mysql
+      - musiclibrary-postgres-data:/var/lib/postgresql/data
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      - MYSQL_ROOT_PASSWORD=musiclibrary
-      - MYSQL_DATABASE=musiclibrary
-      - MYSQL_USER=musiclibrary
-      - MYSQL_PASSWORD=musiclibrary
+      - POSTGRES_PASSWORD=musiclibrary
+      - POSTGRES_DB=musiclibrary
+      - POSTGRES_USER=musiclibrary
 
-  # PHP (with Caddy)
   app:
     image: ambientum/php:7.1-caddy
     container_name: musiclibrary-app
@@ -31,4 +25,4 @@ services:
     ports:
       - "80:8080"
     links:
-      - mysql
+      - postgres
