@@ -25,20 +25,20 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      loading: false,
-      email: '',
-      password: ''
-    }),
-    methods: {
-      login () {
-        this.loading = true;
-      }
+export default {
+  data: () => ({
+    loading: false,
+    email: "",
+    password: ""
+  }),
+  methods: {
+    login() {
+      this.loading = true;
     }
-  };
+  }
+};
 </script>
-<style scoped lang="css">
+<style scoped>
 #login {
   height: 50%;
   width: 100%;

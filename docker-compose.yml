@@ -18,7 +18,7 @@ services:
       - POSTGRES_USER=musiclibrary
 
   app:
-    image: ambientum/php:7.1-caddy
+    image: ambientum/php:7.2-nginx
     container_name: musiclibrary-app
     volumes:
       - .:/var/www/app
@@ -26,3 +26,4 @@ services:
       - "80:8080"
     links:
       - postgres
+

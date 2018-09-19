@@ -7,16 +7,8 @@
 
 @import '~vuetify/dist/vuetify.min.css';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
-@import '~datatables/media/css/jquery.dataTables.css';
-
-@import 'custom/dashboard';
-@import 'custom/signin';
-@import 'custom/toast';
-
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
